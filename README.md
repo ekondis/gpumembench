@@ -5,4 +5,4 @@ In this repository a GPU benchmark tool will be hosted regarding the evaluation 
 *Konstantinidis, E.; Cotronis, Y., "A quantitative performance evaluation of fast on-chip memories of GPUs,"*
 *Parallel, Distributed and Network-Based Processing (PDP), 2016 24th Euromicro International Conference on, 17-19 February 2016 (Accepted)*
 
-All accompanied files are due to be published by the time the PDP'16 conference takes place.
+All accompanied files are due to be published by the time the PDP'16 conference takes place (17th-19th of February 2016).
