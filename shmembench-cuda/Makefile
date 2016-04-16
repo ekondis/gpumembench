@@ -2,7 +2,7 @@
 # 
 # Contact: Elias Konstantinidis <ekondis@gmail.com>
 
-CUDA_INSTALL_PATH = /usr/local/cuda
+include ../common.mk
 CC = g++
 OPTFLAG = -O2 -fomit-frame-pointer -ftree-vectorize -ftree-vectorizer-verbose=0  -funroll-loops -ffast-math -fassociative-math -msse2 -msse
 NVCC = ${CUDA_INSTALL_PATH}/bin/nvcc

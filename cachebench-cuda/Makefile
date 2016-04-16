@@ -2,7 +2,7 @@
 # 
 # Contact: Elias Konstantinidis <ekondis@gmail.com>
 
-CUDA_INSTALL_PATH = /usr/local/cuda
+include ../common.mk
 CC = g++
 OPTFLAG = -O2
 NVCC = ${CUDA_INSTALL_PATH}/bin/nvcc
