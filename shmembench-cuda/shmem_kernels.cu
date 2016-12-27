@@ -128,20 +128,14 @@ float finalizeEvents(cudaEvent_t start, cudaEvent_t stop){
 	return kernel_time;
 }
 
-extern "C" void shmembenchGPU(double *a, double *b, double *c, long size){
-	const int BLOCK_SIZE = 256;//128;//256;
+extern "C" void shmembenchGPU(double *c, long size){
+	const int BLOCK_SIZE = 256;
 	const int TOTAL_BLOCKS = size/(BLOCK_SIZE);
-	double *ad, *bd, *cd;
+	double *cd;
 
-//	CUDA_SAFE_CALL( cudaDeviceSetSharedMemConfig(cudaSharedMemBankSizeEightByte) );
-
-	CUDA_SAFE_CALL( cudaMalloc((void**)&ad, size*sizeof(double)) );
-	CUDA_SAFE_CALL( cudaMalloc((void**)&bd, size*sizeof(double)) );
 	CUDA_SAFE_CALL( cudaMalloc((void**)&cd, size*sizeof(double)) );
 
 	// Copy data to device memory
-	CUDA_SAFE_CALL( cudaMemcpy(ad, a, size*sizeof(double), cudaMemcpyHostToDevice) );
-	CUDA_SAFE_CALL( cudaMemcpy(bd, b, size*sizeof(double), cudaMemcpyHostToDevice) );
 	CUDA_SAFE_CALL( cudaMemset(cd, 0, size*sizeof(double)) );  // initialize to zeros
 
 	// Synchronize in order to wait for memory operations to finish
@@ -174,8 +168,6 @@ extern "C" void shmembenchGPU(double *a, double *b, double *c, long size){
 	// Copy results back to host memory
 	CUDA_SAFE_CALL( cudaMemcpy(c, cd, size*sizeof(double), cudaMemcpyDeviceToHost) );
 
-	CUDA_SAFE_CALL( cudaFree(ad) );
-	CUDA_SAFE_CALL( cudaFree(bd) );
 	CUDA_SAFE_CALL( cudaFree(cd) );
 
 	printf("Kernel execution time\n");

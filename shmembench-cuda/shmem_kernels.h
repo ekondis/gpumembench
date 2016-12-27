@@ -6,5 +6,5 @@
 
 #pragma once
 
-extern "C" void shmembenchGPU(double*, double*, double*, long);
+extern "C" void shmembenchGPU(double*, long);
 

@@ -88,7 +88,6 @@ __device__ void dev_fun<int>::store(volatile int* p, unsigned int offset, const 
 	// .wt Cache write-through (to system memory).
 
 	// Streaming store
-//	asm ("st.wb.global.u32 [%0], %1;" :: "l"(p), "r"(value));
 	asm volatile ("st.cs.global.u32 [%0], %1;" :: "l"(p), "r"(value));
 }
 template<>
@@ -104,8 +103,6 @@ __device__ int dev_fun<int>::reduce(const int &v){
 template<>
 __device__ unsigned int dev_fun<int2>::operator()(int2 v1, unsigned int v2){
 	return v2+(unsigned int)(v1.x+v1.y) ;
-	// or 
-	//return (int2*)( ((unsigned long long)v2)+(unsigned int)(v1.x | (unsigned long long)(v1.y << 32)) );
 }
 template<>
 __device__ int2 dev_fun<int2>::operator()(const int2 &v1, const int2 &v2){
@@ -132,7 +129,6 @@ __device__ int2 dev_fun<int2>::load(volatile const int2* p, unsigned int offset)
 #ifdef L2_ONLY
 	// Global level caching
 	asm volatile ("ld.cg.u64 %0, [%1];" : "=l"(retval.ll) : "l"(p));
-//	asm volatile ("ld.cv.u64 %0, [%1];" : "=l"(retval.ll) : "l"(p));
 #else
 	// All cache levels utilized
 	asm volatile ("ld.ca.u64 %0, [%1];" : "=l"(retval.ll) : "l"(p));
@@ -149,7 +145,6 @@ __device__ void dev_fun<int2>::store(volatile int2* p, unsigned int offset, cons
 	retval.i2 = value;
 	p += offset;
 	// Streaming store
-//	asm volatile ("st.wb.global.u64 [%0], %1;" :: "l"(p), "l"(retval.ll));
 	asm volatile ("st.cs.global.u64 [%0], %1;" :: "l"(p), "l"(retval.ll));
 }
 template<>
@@ -220,11 +215,7 @@ __global__ void benchmark_func(T * const g_data){
 	int index = stepwidth*blockIdx.x*blockdim + threadIdx.x;
 	index = index_clamping==0 ? index : index % index_clamping;
 	const int stride = blockdim;
-	// Grid-wise striding 
-//	int index = blockIdx.x*blockdim + threadIdx.x;
-//	const int stride = blockdim*gridDim.x;
 
-//	T *data_ptr = g_data+index;
 	unsigned int offset = index;
 	T temp = func.init(0);
 	for(int j=0; j<TOTAL_ITERATIONS; j+=UNROLL_ITERATIONS){

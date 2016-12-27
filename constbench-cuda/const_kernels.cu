@@ -112,7 +112,7 @@ float finalizeEvents(cudaEvent_t start, cudaEvent_t stop){
 }
 
 extern "C" void constbenchGPU(int *a, long gridsize){
-	const int BLOCK_SIZE = 256;//128;
+	const int BLOCK_SIZE = 256;
 	const int TOTAL_BLOCKS = gridsize/(BLOCK_SIZE);
 	int *cd, c;
 
