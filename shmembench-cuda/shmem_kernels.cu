@@ -139,19 +139,19 @@ extern "C" void shmembenchGPU(double *c, long size){
 	CUDA_SAFE_CALL( cudaMemset(cd, 0, size*sizeof(double)) );  // initialize to zeros
 
 	// Synchronize in order to wait for memory operations to finish
-	CUDA_SAFE_CALL( cudaThreadSynchronize() );
+	CUDA_SAFE_CALL( cudaDeviceSynchronize() );
 
-    dim3 dimBlock(BLOCK_SIZE, 1, 1);
-    dim3 dimGrid_f1(TOTAL_BLOCKS, 1, 1);
-    dim3 dimGrid_f2(TOTAL_BLOCKS/2, 1, 1);
-    dim3 dimGrid_f4(TOTAL_BLOCKS/4, 1, 1);
+	dim3 dimBlock(BLOCK_SIZE, 1, 1);
+	dim3 dimGrid_f1(TOTAL_BLOCKS, 1, 1);
+	dim3 dimGrid_f2(TOTAL_BLOCKS/2, 1, 1);
+	dim3 dimGrid_f4(TOTAL_BLOCKS/4, 1, 1);
 	int shared_mem_per_block = BLOCK_SIZE*sizeof(float)*6;
 	cudaEvent_t start, stop;
 
 	// warm up
 	benchmark_shmem<float><<< dimGrid_f4, dimBlock, shared_mem_per_block >>>((float*)cd);
 	CUDA_SAFE_CALL( cudaGetLastError() );
-	CUDA_SAFE_CALL( cudaThreadSynchronize() );
+	CUDA_SAFE_CALL( cudaDeviceSynchronize() );
 
 	initializeEvents(&start, &stop);
 	benchmark_shmem<float><<< dimGrid_f1, dimBlock, shared_mem_per_block >>>((float*)cd);

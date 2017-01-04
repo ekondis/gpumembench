@@ -123,16 +123,16 @@ extern "C" void constbenchGPU(int *a, long gridsize){
 	CUDA_SAFE_CALL( cudaMemset(cd, 0, sizeof(int)) );  // initialize to zeros
 
 	// Synchronize in order to wait for memory operations to finish
-	CUDA_SAFE_CALL( cudaThreadSynchronize() );
+	CUDA_SAFE_CALL( cudaDeviceSynchronize() );
 
-    dim3 dimBlock(BLOCK_SIZE);
-    dim3 dimGrid(TOTAL_BLOCKS);
+	dim3 dimBlock(BLOCK_SIZE);
+	dim3 dimGrid(TOTAL_BLOCKS);
 	cudaEvent_t start, stop;
 
 	// warm up
 	benchmark_constant<int><<< dimGrid, dimBlock >>>(cd);
 	CUDA_SAFE_CALL( cudaGetLastError() );
-	CUDA_SAFE_CALL( cudaThreadSynchronize() );
+	CUDA_SAFE_CALL( cudaDeviceSynchronize() );
 
 	CUDA_SAFE_CALL( cudaMemset(cd, 0, sizeof(int)) );  // initialize to zeros
 

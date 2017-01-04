@@ -293,7 +293,7 @@ void runbench_warmup(datatype *cd, long size){
 
 	benchmark_func< datatype, false, BLOCK_SIZE, 1, 256 ><<< dimReducedGrid, dimBlock, shared_size >>>(cd);
 	CUDA_SAFE_CALL( cudaGetLastError() );
-	CUDA_SAFE_CALL( cudaThreadSynchronize() );
+	CUDA_SAFE_CALL( cudaDeviceSynchronize() );
 }
 
 template<class datatype, bool readonly, int stepwidth, int index_clamping>
@@ -309,7 +309,7 @@ double runbench(int total_blocks, datatype *cd, long size, bool spreadsheet){
 	CUDA_SAFE_CALL( cudaMemset(cd, 0, size*sizeof(datatype)) );  // initialize to zeros
 
 	dim3 dimBlock(BLOCK_SIZE, 1, 1);
-    dim3 dimGrid(total_blocks, 1, 1);
+	dim3 dimGrid(total_blocks, 1, 1);
 
 	cudaEvent_t start, stop;
 
@@ -370,7 +370,7 @@ double cachebenchGPU(double *c, long size, bool excel){
 	cudaBindTexture(0, texdataI4, cd, size*sizeof(datatype));
 
 	// Synchronize in order to wait for memory operations to finish
-	CUDA_SAFE_CALL( cudaThreadSynchronize() );
+	CUDA_SAFE_CALL( cudaDeviceSynchronize() );
 
 	runbench_warmup(cd, size);
 
