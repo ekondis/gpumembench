@@ -172,5 +172,6 @@ Publications
 
 If you find this benchmark tool useful for your research please don't forget to provide citation to the following paper:
 
-*Konstantinidis, E.; Cotronis, Y., "A quantitative performance evaluation of fast on-chip memories of GPUs,"* 
-*24th Euromicro International Conference on Parallel, Distributed and Network-Based Processing (PDP), Heraklion, Crete, Greece, pp. 448-455, 2016*
+*Konstantinidis, E.; Cotronis, Y., "A quantitative performance evaluation of fast on-chip memories of GPUs",* 
+*24th Euromicro International Conference on Parallel, Distributed and Network-Based Processing (PDP), Heraklion, Crete, Greece, pp. 448-455, 2016*  
+*doi: 10.1109/PDP.2016.56*
