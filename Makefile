@@ -9,18 +9,21 @@ all:
 	$(MAKE) -C shmembench-cuda
 	$(MAKE) -C shmembench-ocl
 	$(MAKE) -C constbench-cuda
-	mkdir -p bin/cuda bin/opencl
-	cp cachebench-cuda/cachebench cachebench-cuda/cachebench-l2-only cachebench-cuda/cachebench-tex-loads shmembench-cuda/shmembench constbench-cuda/constbench bin/cuda
-	cp shmembench-cuda/shmembench bin/opencl
+	$(MAKE) -C constbench-ocl
+	mkdir -p bin
+	cp cachebench-cuda/cachebench cachebench-cuda/cachebench-l2-only cachebench-cuda/cachebench-tex-loads shmembench-cuda/shmembench constbench-cuda/constbench bin/
+	cp shmembench-ocl/shmembench-ocl constbench-ocl/constbench-ocl bin/
 
 clean:
 	$(MAKE) -C cachebench-cuda clean
 	$(MAKE) -C shmembench-cuda clean
 	$(MAKE) -C shmembench-ocl clean
 	$(MAKE) -C constbench-cuda clean
+	$(MAKE) -C constbench-ocl clean
 
 rebuild:
 	$(MAKE) -C cachebench-cuda rebuild
 	$(MAKE) -C shmembench-cuda rebuild
 	$(MAKE) -C shmembench-ocl rebuild
 	$(MAKE) -C constbench-cuda rebuild
+	$(MAKE) -C constbench-ocl rebuild
