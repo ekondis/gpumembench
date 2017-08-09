@@ -282,16 +282,11 @@ template<class datatype>
 void runbench_warmup(datatype *cd, long size){
 	const long reduced_grid_size = size/(UNROLL_ITERATIONS_MEM)/32;
 	const int TOTAL_REDUCED_BLOCKS = reduced_grid_size/BLOCK_SIZE;
-#ifdef SHMEM
-	const int shared_size = sizeof(short)*(BLOCK_SIZE+32);
-#else
-	const int shared_size = 0;
-#endif
 
 	dim3 dimBlock(BLOCK_SIZE, 1, 1);
 	dim3 dimReducedGrid(TOTAL_REDUCED_BLOCKS, 1, 1);
 
-	benchmark_func< datatype, false, BLOCK_SIZE, 1, 256 ><<< dimReducedGrid, dimBlock, shared_size >>>(cd);
+	benchmark_func< datatype, false, BLOCK_SIZE, 1, 256 ><<< dimReducedGrid, dimBlock >>>(cd);
 	CUDA_SAFE_CALL( cudaGetLastError() );
 	CUDA_SAFE_CALL( cudaDeviceSynchronize() );
 }
