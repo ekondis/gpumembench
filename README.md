@@ -2,9 +2,9 @@
 
 In this repository a GPU benchmark tool is hosted regarding the evaluation of on-chip GPU memories from a memory bandwidth perspective. In particular, 3 benchmark tools are provided for the assessment of L1-L2-texture caches, shared memory and constant memory cache, respectively.
 
-For the time, only CUDA implementations are provided. A future goal is to port this tool to the OpenCL and HIP platforms.
+CUDA and OpenCL implementations are provided.
 
-To build this tools use the provided Makefile. If it is needed you can set the CUDA_INSTALL_PATH variable in "common.mk" to point to the CUDA installation directory.
+To build this tools use the provided Makefile. If it is needed you have to set the CUDA_INSTALL_PATH, OPENCL_INSTALL_PATH & OPENCL_LIBRARY_PATH variables in "common.mk" to point to the proper CUDA/OpenCL directories.
 
 Execution results
 --------------
