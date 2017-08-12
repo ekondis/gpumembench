@@ -7,7 +7,7 @@ CC = g++
 OPTFLAG = -O2 -fomit-frame-pointer -ftree-vectorize -ftree-vectorizer-verbose=0  -funroll-loops -ffast-math -fassociative-math -msse2 -msse
 INCDIR = ../common
 FLAGS = ${OPTFLAG} -I${OPENCL_INSTALL_PATH}/include -Wall -g -I${INCDIR}
-LFLAGS = -L${OPENCL_INSTALL_PATH}/lib${LIBSUFFIX} -lm -lstdc++ -lOpenCL -lrt
+LFLAGS = -L${OPENCL_LIBRARY_PATH} -lm -lstdc++ -lOpenCL -lrt
 
 constbench-ocl: main.o const_kernels.o
 	${CC} -o $@ $^ ${LFLAGS}
